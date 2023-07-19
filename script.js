@@ -1,6 +1,6 @@
 const $locationsEl = $("#search");
 const $locSearch = $("#search");
-const $historyEl = $("#history");
+const $histEl = $("#history");
 const $todaysWeatherEl = $("#todaysWeather");
 const $fiveDayssEl = $("#fiveDays");
 const $searchButt = $("#searchButt");
@@ -32,7 +32,7 @@ for (var i = 0; i < storedHist.length; i++) {
       .attr("class", "histBtn col-md-11 col-ms-11")
       .attr("data-city", storedHist[i])
       .text(storedHist[i])
-      .appendTo($historyEl)
+      .appendTo($histEl)
       .on("click", histSearch);
   }
 
@@ -54,16 +54,16 @@ let search = function (event) {
 };
 // get lat and lon
 let getLatLong = function (location) {
-  let cityURL =
+  let citysURL =
     "https://api.openweathermap.org/data/2.5/forecast?q=" + location + apiKey;
-  fetch(cityURL).then(function (response) {
+  fetch(citysURL).then(function (response) {
     if (response.ok) {
-      response.json().then(function (cityData) {
-        let lat = cityData.city.coord.lat; 
-        let lon = cityData["city"]["coord"]["lon"]; // ↑
-        let cityName = cityData.city.name;
-        console.log("ln63 cityData.city.name", cityData.city.name);
-        getTodaysWeather(lat, lon, cityName);
+      response.json().then(function (citysData) {
+        let lat = citysData.city.coord.lat; 
+        let lon = citysData["city"]["coord"]["lon"]; // ↑
+        let citysName = citysData.city.name;
+        console.log("ln63 citysData.city.name", citysData.city.name);
+        getTodaysWeather(lat, lon, citysName);
         getFiveDaysForecast(lat, lon);
         console.log("lon= ", lon);
         console.log("lat= ", lat);
@@ -71,7 +71,7 @@ let getLatLong = function (location) {
         $todaysWeatherEl.text("");
 
         // Sets user input into local storage history after search
-        let histValue = cityName;
+        let histValue = citysName;
         storedHist.unshift(histValue);
         console.log("histValue", histValue);
 
@@ -82,9 +82,9 @@ let getLatLong = function (location) {
         );
         $("<button>")
           .attr("class", "histBtn col-md-11 col-ms-11")
-          .attr("data-city", cityData.city.name)
+          .attr("data-city", citysData.city.name)
           .text(histValue)
-          .prependTo($historyEl)
+          .prependTo($histEl)
           .on("click", histSearch);
         //
       });
@@ -96,16 +96,16 @@ let getLatLong = function (location) {
 
 let histGetLLg = function (city) {
   console.log("ln97 histGetLLg city=", city);
-  let cityURL =
+  let citysURL =
     "https://api.openweathermap.org/data/2.5/forecast?q=" + city + apiKey;
-  fetch(cityURL).then(function (response) {
+  fetch(citysURL).then(function (response) {
     if (response.ok) {
-      response.json().then(function (cityData) {
-        console.log(cityData);
-        let lat = cityData.city.coord.lat; 
-        let lon = cityData["city"]["coord"]["lon"]; 
-        let cityName = cityData.city.name;
-        getTodaysWeather(lat, lon, cityName);
+      response.json().then(function (citysData) {
+        console.log(citysData);
+        let lat = citysData.city.coord.lat; 
+        let lon = citysData["city"]["coord"]["lon"]; 
+        let citysName = citysData.city.name;
+        getTodaysWeather(lat, lon, citysName);
         getFiveDaysForecast(lat, lon);
         console.log("lon= ", lon);
         console.log("lat= ", lat);
@@ -113,20 +113,20 @@ let histGetLLg = function (city) {
         $todaysWeatherEl.text("");
 
         
-        let histValue = cityName;
+        let histValue = citysName;
         storedHist.unshift(histValue);
         console.log("histValue", histValue);
 
       
         localStorage.setItem(
           "histValue",
-          JSON.stringify(storedHist.slice(0, 15)) // Limits to 15 values in search history
+          JSON.stringify(storedHist.slice(0, 15)) 
         );
         $("<button>")
           .attr("class", "histBtn col-md-11 col-ms-11")
-          .attr("data-city", cityData.city.name)
+          .attr("data-city", citysData.city.name)
           .text(histValue)
-          .prependTo($historyEl)
+          .prependTo($histEl)
           .on("click", histSearch);
       });
     }
@@ -134,7 +134,7 @@ let histGetLLg = function (city) {
 };
 
 // for today
-let getTodaysWeather = function (lat, lon, cityName) {
+let getTodaysWeather = function (lat, lon, citysName) {
   let dURL =
     "https://api.openweathermap.org/data/2.5/weather?lat=" +
     lat +
@@ -146,36 +146,36 @@ let getTodaysWeather = function (lat, lon, cityName) {
     if (response.ok) {
       response.json().then(function (dData) {
         console.log("dData", dData);
-        console.log("cityName", cityName);
-        let $cityNameEl = $(".cityName").text(cityName);
+        console.log("citysName", citysName);
+        let $citysNameEl = $(".citysName").text(citysName);
         let dailyCard = $("<div>")
           .attr("class", "dailyCard col-md-8 col-sm-10")
-          .attr("style", "padding-top: 7%");
+          .attr("style", "padding-top: 8%");
 
-        let dailyIcon = $("<img>", {
+        let dailyIcons = $("<img>", {
           src:
             " https://openweathermap.org/img/wn/" +
             dData.weather[0].icon +
             "@2x.png",
-        }).attr("class", "col-md-5");
+        }).attr("class", "col-md-6");
 
-        let dailyMxTemp = $("<div>").text(
-          "H Temperature : " + dData.main.temp_max + " °F"
+        let dailyMax = $("<div>").text(
+          "H Temperature : " + dData.main.temps_max + " °F"
         );
 
-        let dailyMnTemp = $("<div>").text(
-          "L Temperature : " + dData.main.temp_min + " °F"
+        let dailyMin = $("<div>").text(
+          "L Temperature : " + dData.main.temps_min + " °F"
         );
 
-        let dailyWind = $("<div>").text("Wind : " + dData.wind.speed + " MPH");
+        let dailyWinds = $("<div>").text("Wind : " + dData.winds.speed + " MPH");
 
-        let dailyHumi = $("<div>").text(
-          "Humidity : " + dData.main.humidity + " %"
+        let dailyHumid = $("<div>").text(
+          "Humidity : " + dData.main.humid + " %"
         );
 
-        $todaysWeatherEl.append(dailyIcon);
+        $todaysWeatherEl.append(dailyIcons);
         $todaysWeatherEl.append(dailyCard);
-        dailyCard.append(dailyMxTemp, dailyMnTemp, dailyWind, dailyHumi);
+        dailyCard.append(dailyMax, dailyMin, dailyWinds, dailyHumid);
       });
     }
   });
@@ -204,8 +204,8 @@ let getFiveDaysForecast = function (lat, lon) {
 
           if (dtDate !== todaysNoShow) {
             
-            let repData = index % 8 == 7;
-            if (repData) {
+            let repDatas = index % 8 == 7;
+            if (repDatas) {
              
 
               let FDFcard = $("<div>").attr(
@@ -213,10 +213,10 @@ let getFiveDaysForecast = function (lat, lon) {
                 "FDFcard col-md-3 col-sm-11"
               );
 
-              let repDate = $("<div>").text(
+              let repDates = $("<div>").text(
                 dayjs(weatherDataArr[index].dt_txt.slice(0, 10)).format("dddd")
               );
-              repDate.append(
+              repDates.append(
                 $("<div>").text(
                   dayjs(weatherDataArr[index].dt_txt.slice(0, 10)).format(
                     "MMMM DD, YYYY"
@@ -232,17 +232,17 @@ let getFiveDaysForecast = function (lat, lon) {
               });
               
 
-              let repTemp = $("<div>").text(
-                "Temperature : " + weatherDataArr[index].main.temp + " °F"
+              let repTemps = $("<div>").text(
+                "Temperature : " + weatherDataArr[index].main.temps + " °F"
               );
-              let repWind = $("<div>").text(
-                "Wind : " + weatherDataArr[index].wind.speed + " MPH"
+              let repWinds = $("<div>").text(
+                "Wind : " + weatherDataArr[index].winds.speed + " MPH"
               );
-              let repHumi = $("<div>").text(
-                "Humidity : " + weatherDataArr[index].main.humidity + " %"
+              let repHumid = $("<div>").text(
+                "Humidity : " + weatherDataArr[index].main.humid + " %"
               );
               $fiveDayssEl.append(FDFcard);
-              FDFcard.append(repDate, repIcon, repTemp, repWind, repHumi);
+              FDFcard.append(repDates, repIcons, repTemps, repWinds, repHumid);
             }
           }
         });
@@ -255,16 +255,6 @@ let getFiveDaysForecast = function (lat, lon) {
 $searchButt.click(search);
 $(".clearListButt").on("click", () => {
   localStorage.clear();
-  $historyEl.empty();
+  $histEl.empty();
 });
 
-// theme switcher
-function toggleTheme() {
-  var theme = document.getElementById("theme");
-  if (theme.getAttribute("href") === "./assets/css/light.css") {
-    theme.setAttribute("href", "./assets/css/dark.css");
-    
-  } else {
-    theme.setAttribute("href", "./assets/css/light.css");
-  }
-}
