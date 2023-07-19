@@ -155,7 +155,7 @@ let getTodaysWeather = function (lat, lon, citysName) {
         let dailyIcons = $("<img>", {
           src:
             " https://openweathermap.org/img/wn/" +
-            dData.weather[0].icon +
+            dData.weathers[0].icon +
             "@2x.png",
         }).attr("class", "col-md-6");
 
@@ -194,9 +194,9 @@ let getFiveDaysForecast = function (lat, lon) {
     if (response.ok) {
       response.json().then(function (llData) {
         
-        let weatherDataArr = llData.list;
+        let weathersDataArr = llData.list;
      
-        $.each(weatherDataArr, function (index, element) {
+        $.each(weathersDataArr, function (index, element) {
           let dt = element.dt_txt;
           let dtDate = dt.slice(0, 10);
           let dtTime = dt.slice(-8);
@@ -214,11 +214,11 @@ let getFiveDaysForecast = function (lat, lon) {
               );
 
               let repDates = $("<div>").text(
-                dayjs(weatherDataArr[index].dt_txt.slice(0, 10)).format("dddd")
+                dayjs(weathersDataArr[index].dt_txt.slice(0, 10)).format("dddd")
               );
               repDates.append(
                 $("<div>").text(
-                  dayjs(weatherDataArr[index].dt_txt.slice(0, 10)).format(
+                  dayjs(weathersDataArr[index].dt_txt.slice(0, 10)).format(
                     "MMMM DD, YYYY"
                   )
                 )
@@ -227,19 +227,19 @@ let getFiveDaysForecast = function (lat, lon) {
               let repIcon = $("<img>", {
                 src:
                   " https://openweathermap.org/img/wn/" +
-                  weatherDataArr[index].weather[0].icon +
+                  weathersDataArr[index].weathers[0].icon +
                   "@2x.png",
               });
               
 
               let repTemps = $("<div>").text(
-                "Temperature : " + weatherDataArr[index].main.temps + " °F"
+                "Temperature : " + weathersDataArr[index].main.temps + " °F"
               );
               let repWinds = $("<div>").text(
-                "Wind : " + weatherDataArr[index].winds.speed + " MPH"
+                "Wind : " + weathersDataArr[index].winds.speed + " MPH"
               );
               let repHumid = $("<div>").text(
-                "Humidity : " + weatherDataArr[index].main.humid + " %"
+                "Humidity : " + weathersDataArr[index].main.humid + " %"
               );
               $fiveDayssEl.append(FDFcard);
               FDFcard.append(repDates, repIcons, repTemps, repWinds, repHumid);
