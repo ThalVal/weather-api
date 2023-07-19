@@ -152,9 +152,11 @@ let getTodaysWeather = function (lat, lon, citysName) {
           .attr("class", "dailyCard col-md-8 col-sm-10")
           .attr("style", "padding-top: 8%");
 
-        let dailyIcons = $("<img>", {
+        let dailyIcon = $("<img>", {
           src:
-            ` https://openweathermap.org/img/wn/${dData.weathers[0].icon}@2x.png`,
+            " https://openweathermap.org/img/wn/" +
+            dData.weather[0].icon +
+            "@2x.png",
         }).attr("class", "col-md-6");
 
         let dailyMax = $("<div>").text(
@@ -165,13 +167,13 @@ let getTodaysWeather = function (lat, lon, citysName) {
           "L Temperature : " + dData.main.temps_min + " °F"
         );
 
-        let dailyWinds = $("<div>").text("Wind : " + dData.winds.speed + " MPH");
+        let dailyWinds = $("<div>").text("Wind : " + dData.wind.speed + " MPH");
 
         let dailyHumid = $("<div>").text(
           "Humidity : " + dData.main.humid + " %"
         );
 
-        $todaysWeatherEl.append(dailyIcons);
+        $todaysWeatherEl.append(dailyIcon);
         $todaysWeatherEl.append(dailyCard);
         dailyCard.append(dailyMax, dailyMin, dailyWinds, dailyHumid);
       });
@@ -222,9 +224,11 @@ let getFiveDaysForecast = function (lat, lon) {
                 )
               );
 
-              let repIcons = $("<img>", {
+              let repIcon = $("<img>", {
                 src:
-                  ` https://openweathermap.org/img/wn/${weathersDataArr[index].weathers[0].icon}@2x.png`,
+                  " https://openweathermap.org/img/wn/" +
+                  weathersDataArr[index].weather[0].icon +
+                  "@2x.png",
               });
               
 
@@ -232,13 +236,13 @@ let getFiveDaysForecast = function (lat, lon) {
                 "Temperature : " + weathersDataArr[index].main.temps + " °F"
               );
               let repWinds = $("<div>").text(
-                "Wind : " + weathersDataArr[index].winds.speed + " MPH"
+                "Wind : " + weathersDataArr[index].wind.speed + " MPH"
               );
               let repHumid = $("<div>").text(
                 "Humidity : " + weathersDataArr[index].main.humid + " %"
               );
               $fiveDayssEl.append(FDFcard);
-              FDFcard.append(repDates, repIcons, repTemps, repWinds, repHumid);
+              FDFcard.append(repDates, repIcon, repTemps, repWinds, repHumid);
             }
           }
         });
