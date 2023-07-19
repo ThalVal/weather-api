@@ -1,0 +1,57 @@
+:root {
+    --head: rgba(221, 221, 253, 0.801);
+    --bg-c: #3b3b44;
+    --daily: rgba(237, 224, 241, 0.685);
+    --macity: grey;
+    --text: black;
+}
+
+body{
+    background: radial-gradient(circle, rgba(238,233,34,1) 0%, rgba(151,238,212,1) 39%, rgba(162,165,166,1) 100%);
+}
+header {
+    background-color: var(--head);
+    color: var(--bg-c);
+    text-align: center;
+    margin: 25px;
+}
+
+h1 {
+    text-align: center;
+    
+}
+
+h2 {
+    text-align: center;
+    border-style: double;
+    border-color: pink;
+    padding: 15px;
+}
+
+button {
+    border-style: groove;
+    border-color: var(--daily);
+}
+
+#searchForm {
+    padding-top: 25px;
+
+}
+
+.column {
+    border-style: dashed;
+    border-color: var(--macity);
+    
+}
+
+#display {
+    border-style: solid;
+    border-color: pink;
+    background-color: var(--daily);
+    align-items: center;
+    
+}
+
+#fiveDays {
+    border-style: dashed;
+}

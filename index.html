@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Weather Forcast App</title>
+<!--Bootstrap and CSS Stylesheets-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="asset\style.css">
+</head>
+
+<!--Header Content-->
+
+ <body>
+    <header class="header">
+      <h1>Sooo....
+        </h1>
+        <h3>the weather?</h3>
+      <div id="today"></div>
+    </header>
+    <main class="main">
+      <div class="container mx-2">
+        <div class="row w-40" style="height: 60vh">
+          <div id="searchAndHist" class="col-md-4 col-sm-11 row">
+            <form id="searchForm" class="col-md-13 col-sm-13">
+              <input
+                id="search"
+                type="searching"
+                class="form-control round"
+                placeholder="Can you feel the rain?"
+                aria-label="Search"
+              />
+              <button id="searchButt">
+                <i class="fa-solid fa-magnifying-glass-location"></i>
+              </button>
+            </form>
+            <div id="searchList" class="col-md-13 col-sm-13">
+              Search History
+              <hr class="round" />
+              <div id="history" class="row"></div>
+              <div class="clearList">
+                <button class="clearListButt">
+                  <i class="fa-solid fa-ban trashCan"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div id="display" class="col-md-10">
+            <div class="todayBox">
+              <h2 class="subtitle">
+                Weather Today: <span class="cityName"></span>
+              </h2>
+              <div id="todaysWeather" class="row"></div>
+            </div>
+            <div class="fiveDays">
+              <h2 class="subtitle">5-Day Forecast:</h2>
+              <div id="fiveDays" class="row"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+      integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
+      crossorigin="anonymous"
+    ></script>
+    <script src="script.js"></script>
+    </body>
+    </html>
