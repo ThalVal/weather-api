@@ -1,14 +1,14 @@
 const $locationsEl = $("#search");
-const $locSearchForm = $("#search");
+const $locSearch = $("#search");
 const $historyEl = $("#history");
 const $todaysWeatherEl = $("#todaysWeather");
-const $fiveDaysEl = $("#fiveDays");
+const $fiveDayssEl = $("#fiveDays");
 const $searchButt = $("#searchButt");
 const apiKey = "&appid=13f0a656ca2e45b9c8bfa2e6208aad73";
 
 // Current Day and Date
-let $todayEl = $("#today");
-$todayEl.text(dayjs().format("dddd, MMMM DD, YYYY"));
+let $todaysEl = $("#today");
+$todaysEl.text(dayjs().format("dddd, MMMM DD, YYYY"));
 let todaysNoShow = dayjs().format("YYYY-MM-DD");
 console.log(todaysNoShow);
 console.log(typeof todaysNoShow);
@@ -19,7 +19,7 @@ let histSearch = function (event) {
   var city = $(event.target).data("city");
   console.log("data-city", city);
   if (city) {
-    histGetLL(city);
+    histGetLLg(city);
   }
 };
 
@@ -44,16 +44,16 @@ let search = function (event) {
   let location = $locationsEl.val().trim();
 
   if (location) {
-    getLatLon(location); 
+    getLatLong(location); 
 
-    $locSearchForm.val("");
+    $locSearch.val("");
     console.log(location); 
   } else {
-    alert("Please enter a city name");
+    alert("Enter a valid city name");
   }
 };
 // get lat and lon
-let getLatLon = function (location) {
+let getLatLong = function (location) {
   let cityURL =
     "https://api.openweathermap.org/data/2.5/forecast?q=" + location + apiKey;
   fetch(cityURL).then(function (response) {
@@ -67,7 +67,7 @@ let getLatLon = function (location) {
         getFiveDaysForecast(lat, lon);
         console.log("lon= ", lon);
         console.log("lat= ", lat);
-        $fiveDaysEl.text("");
+        $fiveDayssEl.text("");
         $todaysWeatherEl.text("");
 
         // Sets user input into local storage history after search
@@ -89,13 +89,13 @@ let getLatLon = function (location) {
         //
       });
     } else {
-      alert("City is not found.");
+      alert("City was not found.");
     }
   });
 };
 
-let histGetLL = function (city) {
-  console.log("ln97 histGetLL city=", city);
+let histGetLLg = function (city) {
+  console.log("ln97 histGetLLg city=", city);
   let cityURL =
     "https://api.openweathermap.org/data/2.5/forecast?q=" + city + apiKey;
   fetch(cityURL).then(function (response) {
@@ -109,7 +109,7 @@ let histGetLL = function (city) {
         getFiveDaysForecast(lat, lon);
         console.log("lon= ", lon);
         console.log("lat= ", lat);
-        $fiveDaysEl.text("");
+        $fiveDayssEl.text("");
         $todaysWeatherEl.text("");
 
         
@@ -241,7 +241,7 @@ let getFiveDaysForecast = function (lat, lon) {
               let repHumi = $("<div>").text(
                 "Humidity : " + weatherDataArr[index].main.humidity + " %"
               );
-              $fiveDaysEl.append(FDFcard);
+              $fiveDayssEl.append(FDFcard);
               FDFcard.append(repDate, repIcon, repTemp, repWind, repHumi);
             }
           }
