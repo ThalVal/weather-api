@@ -154,9 +154,7 @@ let getTodaysWeather = function (lat, lon, citysName) {
 
         let dailyIcons = $("<img>", {
           src:
-            " https://openweathermap.org/img/wn/" +
-            dData.weathers[0].icon +
-            "@2x.png",
+            ` https://openweathermap.org/img/wn/${dData.weathers[0].icon}@2x.png`,
         }).attr("class", "col-md-6");
 
         let dailyMax = $("<div>").text(
@@ -226,9 +224,7 @@ let getFiveDaysForecast = function (lat, lon) {
 
               let repIcons = $("<img>", {
                 src:
-                  " https://openweathermap.org/img/wn/" +
-                  weathersDataArr[index].weathers[0].icon +
-                  "@2x.png",
+                  ` https://openweathermap.org/img/wn/${weathersDataArr[index].weathers[0].icon}@2x.png`,
               });
               
 
